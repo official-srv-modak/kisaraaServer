@@ -20,6 +20,18 @@ import com.kisara.Account.AccountManager;
 import com.kisara.shopManager.DatabaseConnection;
 import com.kisara.shopManager.FileSystem;
 
+/*
+ *  AUTHOR - SOURAV MODAK
+ *  
+ * Uses the multipart form structure to enable uploading images into the server. Can be enhanced to upload any kind of files
+ *  
+ *  Created on 29th March 2021
+ *  
+ *  Add modification history below.
+ *  
+ *  
+ */
+
 public class UploadImage extends HttpServlet {
    
    private boolean isMultipart;
@@ -64,9 +76,9 @@ public class UploadImage extends HttpServlet {
 	   
 	   
       // Check that we have a file upload request
-     // isMultipart = ServletFileUpload.isMultipartContent(multipart);
-     // if(isMultipart)
-      //{
+	   isMultipart = ServletFileUpload.isMultipartContent(request);
+	   if(isMultipart)
+	   {
     	  JSONObject out = new JSONObject();
     	  
           DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -186,7 +198,7 @@ public class UploadImage extends HttpServlet {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
-      //}
+      	}
       
       }
       
