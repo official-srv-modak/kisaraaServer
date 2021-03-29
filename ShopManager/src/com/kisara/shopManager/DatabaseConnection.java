@@ -456,7 +456,10 @@ public abstract class DatabaseConnection {
 	{
 		checkConnection();
 		HashMap<String, ArrayList<String>> output = new HashMap<String, ArrayList<String>>();
-		
+		if(predicateValue.contains("\\"))
+		{
+			predicateValue = predicateValue.replace("\\", "\\\\");
+		}
 		String sql = "";
 		try {
 			sql = "select * from "+dbName+"."+tableName+" where "+predicateColumn+" = \""+predicateValue+"\"";

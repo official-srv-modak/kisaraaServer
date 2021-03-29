@@ -433,37 +433,33 @@ public class FileSystem extends HttpServlet {
 					
 
 				}
-				else if(StandardWatchEventKinds.ENTRY_MODIFY.equals(event.kind()))
-				{
-					String fileName = event.context().toString();
-					System.out.println("Changes detected, modified " + fileName);
-					
-					
-					// to remove from database as deleted
-					if(!isUnixHiddenFile(fileName))
-					{
-						String type = determineTypeOfFile(homeDirectoryPath+File.separator+fileName);
-					    ArrayList<String> columnsList = new ArrayList<String>(), valuesList = new ArrayList<String>();
-					    columnsList.add("logical_path");
-					    valuesList.add(homeDirectoryPath+File.separator+fileName);
-					    DatabaseConnection.deleteFromTable(dbName, fileSystemTableName, columnsList, valuesList);
-					    columnsList = null;
-					    valuesList = null;
-
-					    
-						// to database as created
-					    type = determineTypeOfFile(homeDirectoryPath+File.separator+fileName);
-					    columnsList = new ArrayList<String>();
-					    valuesList = new ArrayList<String>();
-					    columnsList = DatabaseConnection.getColumnNames(dbName, fileSystemTableName);
-					    valuesList = DatabaseConnection.makeValuesList(getUniqueId(homeDirectoryPath+File.separator+fileName), homeDirectoryPath+File.separator+fileName, type, "CURDATE()", "NOW()");
-					    DatabaseConnection.insertIntoTable(dbName, fileSystemTableName, columnsList, valuesList);
-					    columnsList = null;
-					    valuesList = null;
-						System.out.println("System Updated");
-					}
-
-				}
+				/*
+				 * else if(StandardWatchEventKinds.ENTRY_MODIFY.equals(event.kind())) { String
+				 * fileName = event.context().toString();
+				 * System.out.println("Changes detected, modified " + fileName);
+				 * 
+				 * 
+				 * // to remove from database as deleted if(!isUnixHiddenFile(fileName)) {
+				 * String type = determineTypeOfFile(homeDirectoryPath+File.separator+fileName);
+				 * ArrayList<String> columnsList = new ArrayList<String>(), valuesList = new
+				 * ArrayList<String>(); columnsList.add("logical_path");
+				 * valuesList.add(homeDirectoryPath+File.separator+fileName);
+				 * DatabaseConnection.deleteFromTable(dbName, fileSystemTableName, columnsList,
+				 * valuesList); columnsList = null; valuesList = null;
+				 * 
+				 * 
+				 * // to database as created type =
+				 * determineTypeOfFile(homeDirectoryPath+File.separator+fileName); columnsList =
+				 * new ArrayList<String>(); valuesList = new ArrayList<String>(); columnsList =
+				 * DatabaseConnection.getColumnNames(dbName, fileSystemTableName); valuesList =
+				 * DatabaseConnection.makeValuesList(getUniqueId(homeDirectoryPath+File.
+				 * separator+fileName), homeDirectoryPath+File.separator+fileName, type,
+				 * "CURDATE()", "NOW()"); DatabaseConnection.insertIntoTable(dbName,
+				 * fileSystemTableName, columnsList, valuesList); columnsList = null; valuesList
+				 * = null; System.out.println("System Updated"); }
+				 * 
+				 * }
+				 */
 			}
 			valid = watchKey.reset();
 			
@@ -475,7 +471,7 @@ public class FileSystem extends HttpServlet {
 	public static void main(String args[]) 
 	{
 		//System.out.println(getUniqueId("/Applications/XAMPP/xamppfiles/htdocs/shop_website/home/catalog/images/women/women2.png"));
-		start();
+		//start();
 		//System.out.print(determineTypeOfFile("C:\\Users\\Saurav\\Downloads\\kisaraa\\home\\catalog\\images\\women\\women3.png"));
 	}
 	
