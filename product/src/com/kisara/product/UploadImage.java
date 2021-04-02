@@ -185,7 +185,6 @@ public class UploadImage extends HttpServlet {
                 
              }
           
-          	
           try {
     			if(out == null)
     		    	out = new JSONObject();
