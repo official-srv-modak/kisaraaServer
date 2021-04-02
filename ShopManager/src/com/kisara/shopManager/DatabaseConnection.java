@@ -50,6 +50,7 @@ public abstract class DatabaseConnection {
 	public static String resourceMappingTableOld = "resource_mapping_table_old";
 	public static String accountDetailsDb = "account_details";
 	public static String userTable = "all_user_info";
+	public static String customerAccount = "customer_account";
 	public static String mysqlUrl = "jdbc:mysql://localhost:3306?useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true";
 	public static String orderDb = "order_db", orderTable = "order_info";
 	public static String orderHistoryDb = "order_db_history";

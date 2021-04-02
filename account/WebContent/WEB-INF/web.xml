@@ -5,8 +5,16 @@
    	<servlet-name>intialise_session</servlet-name>
    	<servlet-class>com.kisara.Account.AccountManager</servlet-class>
    </servlet>
+   <servlet>
+   	<servlet-name>create_cust_account</servlet-name>
+   	<servlet-class>com.kisara.Account.CreateAccount</servlet-class>
+   </servlet>
    <servlet-mapping>
    	<servlet-name>intialise_session</servlet-name>
    	<url-pattern>/login</url-pattern>
+   </servlet-mapping>
+   <servlet-mapping>
+   	<servlet-name>create_cust_account</servlet-name>
+   	<url-pattern>/createaccount</url-pattern>
    </servlet-mapping>
 </web-app>
