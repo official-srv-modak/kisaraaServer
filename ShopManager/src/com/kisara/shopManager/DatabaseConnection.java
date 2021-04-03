@@ -1287,6 +1287,30 @@ public abstract class DatabaseConnection {
 		return property+"_"+propertyId;
 	}
 	
+	public static Boolean dropTable(String dbName, String tableName)
+	{
+		String sql = "";
+		if(tableExist(dbName, tableName))
+		{
+			try
+			{
+				sql = "drop table "+dbName+"."+tableName;
+				Statement s=db.createStatement();
+				s.executeUpdate(sql);
+				return true;
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				System.out.println(sql);
+				return false;
+			}
+		}
+		else
+			return true;
+		
+	}
+	
 	public static void main(String args[])
 	{
 		ArrayList<String> columnNamesList = new ArrayList<String>(), valuesList = new ArrayList<String>();
