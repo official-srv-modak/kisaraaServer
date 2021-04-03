@@ -17,6 +17,10 @@
    	<servlet-name>del_cust_account</servlet-name>
    	<servlet-class>com.kisara.Account.DeleteAccount</servlet-class>
    </servlet>
+   <servlet>
+   	<servlet-name>verify_info</servlet-name>
+   	<servlet-class>com.kisara.Account.VerifyInfo</servlet-class>
+   </servlet>
    <servlet-mapping>
    	<servlet-name>intialise_session</servlet-name>
    	<url-pattern>/login</url-pattern>
@@ -32,5 +36,9 @@
    <servlet-mapping>
    	<servlet-name>del_cust_account</servlet-name>
    	<url-pattern>/deleteaccount</url-pattern>
+   </servlet-mapping>
+   <servlet-mapping>
+   	<servlet-name>verify_info</servlet-name>
+   	<url-pattern>/verifyinfo</url-pattern>
    </servlet-mapping>
 </web-app>

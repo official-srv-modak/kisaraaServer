@@ -119,10 +119,12 @@ public class CreateAccount extends HttpServlet{
 			Boolean flag = createCustomerAccount(jsonObject);
 			if(flag)
 			{
+				out.put("allowed", "true");
 				out.put("response", "user created successfully");
 			}
 			else
 			{
+				out.put("allowed", "false");
 				out.put("response", "technical error, could not create the user");
 			}
 		}
