@@ -25,8 +25,8 @@ public class SearchManager extends HttpServlet {
 			JSONObject out = new JSONObject();
 		    JSONArray outArray = new JSONArray();
 		    
-		    String username = reqObject.getString("username");
-			outArray = DatabaseConnection.searchDb(DatabaseConnection.dbName, DatabaseConnection.sellerTable, "username", username);
+		    String query = reqObject.getString("query");
+			outArray = DatabaseConnection.searchDb(DatabaseConnection.dbName, DatabaseConnection.sellerTable, "name", query);
 			for(int i = 0; i < outArray.length(); i++)
 			{
 				JSONObject temp = outArray.getJSONObject(i);
