@@ -152,7 +152,7 @@ public class UploadImage extends HttpServlet {
      					
      					String id = getImageIdFromFileSystem(file.getAbsolutePath());
      					out.put("image_id", id);
-                        out.put("Uploaded Filename",fileName);
+                        out.put("Uploaded_filename",fileName);
      				}
      				else
      				{
