@@ -28,22 +28,32 @@ public class CreateAccount extends HttpServlet{
 			String username = jsonObject.getString("username"), password = jsonObject.getString("password");
 			jsonObject.put("usertype", usertype);
 			jsonObject.put("privilages", privilages);
-			HashMap<String, ArrayList<String>> toDb = new HashMap<String, ArrayList<String>>();
+			HashMap<String, ArrayList<String>> toDb = new HashMap<String, ArrayList<String>>(), temp = new HashMap<String, ArrayList<String>>();
 			password = AccountManager.getMd5(password);
 			jsonObject.remove("password");
 			jsonObject.put("password", password);
 			toDb = DatabaseConnection.jsonToHashMapList(jsonObject);
-			Boolean flag = DatabaseConnection.insertIntoTableHashMap(DatabaseConnection.userDbName, DatabaseConnection.userTable, toDb);
-			if(flag)
+			///
+			temp = DatabaseConnection.readTableUserWithoutPassword(DatabaseConnection.userDbName, DatabaseConnection.userTable, username);
+			if(temp == null || temp.isEmpty())
 			{
-				toDb.clear();
-				toDb = DatabaseConnection.readTableUserWithoutPassword(DatabaseConnection.userDbName, DatabaseConnection.userTable, username);
-				return toDb.get("uid").get(0);
+				Boolean flag = DatabaseConnection.insertIntoTableHashMap(DatabaseConnection.userDbName, DatabaseConnection.userTable, toDb);
+				if(flag)
+				{
+					toDb.clear();
+					toDb = DatabaseConnection.readTableUserWithoutPassword(DatabaseConnection.userDbName, DatabaseConnection.userTable, username);
+					return toDb.get("uid").get(0);
+				}
+				else
+				{
+					return null;
+				}
 			}
 			else
 			{
-				return null;
+				return temp.get("uid").get(0);
 			}
+			
 		}
 		catch(Exception e)
 		{
@@ -52,12 +62,13 @@ public class CreateAccount extends HttpServlet{
 		}
 	}
 	
-	static Boolean createCustomerAccount(JSONObject jsonObject)
+	static String createCustomerAccount(JSONObject jsonObject)
 	{
 		try
 		{
 			String uid = createUser(jsonObject, "user", "customer");
-			HashMap<String, ArrayList<String>> toDb = new HashMap<String, ArrayList<String>>();
+			HashMap<String, ArrayList<String>> toDb = new HashMap<String, ArrayList<String>>(), temp = new HashMap<String, ArrayList<String>>();
+			String username = jsonObject.getString("username");
 			jsonObject.remove("password");
 			jsonObject.remove("privilages");
 			jsonObject.remove("usertype");
@@ -69,18 +80,25 @@ public class CreateAccount extends HttpServlet{
 			jsonObject.put("joined", joined);
 			jsonObject.put("activity_status", "active");
 			toDb = DatabaseConnection.jsonToHashMapList(jsonObject);
-			Boolean flag = DatabaseConnection.insertIntoTableHashMap(DatabaseConnection.userDbName, DatabaseConnection.customerAccount, toDb);
-			if(flag)
+			temp = DatabaseConnection.readTableUserWithoutPassword(DatabaseConnection.userDbName, DatabaseConnection.customerAccount, username);
+			if(temp == null || temp.isEmpty())
 			{
-				return true;
+				Boolean flag = DatabaseConnection.insertIntoTableHashMap(DatabaseConnection.userDbName, DatabaseConnection.customerAccount, toDb);
+				if(flag)
+				{
+					return "user created";
+				}
+				else
+					return "technical error, could not create the user";
 			}
 			else
-				return false;
+				return "user already present";
+			
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 		
 	}
@@ -116,11 +134,11 @@ public class CreateAccount extends HttpServlet{
 		
 		try 
 		{
-			Boolean flag = createCustomerAccount(jsonObject);
-			if(flag)
+			String flag = createCustomerAccount(jsonObject);
+			if(flag != null && !flag.equals("technical error, could not create the user"))
 			{
 				out.put("allowed", "true");
-				out.put("response", "user created successfully");
+				out.put("response", flag);
 			}
 			else
 			{

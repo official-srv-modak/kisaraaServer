@@ -398,7 +398,9 @@ public abstract class DatabaseConnection {
 				{
 					values.add(r.getString(columnName));
 				}
-				output.put(columnName, values);
+				
+				if(values.size()>0)
+					output.put(columnName, values);
 				r.beforeFirst();
 			}
 			
@@ -410,7 +412,8 @@ public abstract class DatabaseConnection {
 			System.out.println(sql);
 
 		}
-		output.remove("password");
+		if(output.containsKey("password"))
+			output.remove("password");
 		return output;
 	}
 	
